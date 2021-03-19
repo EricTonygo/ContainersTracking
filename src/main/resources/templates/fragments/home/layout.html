@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title th:text="${title}">CONTAINERS TRACKING</title>
+        <meta charset="UTF-8"/>
+        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" media="all" href="/assets/stylesheets/styles.css" data-th-href="@{/assets/stylesheets/styles.css}" />
+        <!--<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">-->
+        <link rel="icon" type="image/x-icon" data-th-href="@{/assets/images/favicon.ico}" />
+    </head>
+    <body>
+        <div th:replace="fragments/home/header::header">...</div>
+        <div th:replace="fragments/home/sidebar::sidebar">...</div>
+        <div th:replace="${view} :: content">...</div>
+        <div th:replace="fragments/home/footer::footer">...</div>
+        <script type="text/javascript" data-th-src="@{/assets/js/jquery-3.2.1.min.js}"></script>
+        <script type="text/javascript" data-th-src="@{/assets/semantic/semantic.min.js}"></script>
+        <script type="text/javascript" src="" data-th-src="@{/assets/js/main.js}"></script>
+    </body>
+</html>
