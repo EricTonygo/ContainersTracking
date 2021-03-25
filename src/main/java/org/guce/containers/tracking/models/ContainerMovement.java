@@ -5,6 +5,8 @@
  */
 package org.guce.containers.tracking.models;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -16,20 +18,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author penda
  */
 @Entity
-@Table(name = "CONTAINERS_MOVEMENT")
+@Table(name = "CONTAINERS_MOVEMENTS")
+@XmlRootElement(name = "container_movement")
 public class ContainerMovement implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private Long id;
-    @Column(name = "USERNAME")
+    @Column(name = "CONTAINER_NUMBER")
     private String containerNumber;
     @Column(name = "MOVEMENT_DATE")
     @Temporal(TemporalType.DATE)
@@ -53,10 +57,15 @@ public class ContainerMovement implements Serializable {
     private String departurePlace;
     @Column(name = "ARRIVAL_PLACE")
     private String arrivalPlace;
+    @Column(name = "LAST_LOCALISATION")
+    private String lastLocalisation;
     @Column(name = "LATITUDE")
-    private String latitude;
+    private Double latitude;
     @Column(name = "LONGITUDE")
-    private String longitude;
+    private Double longitude;
+    @Column(name = "EXPECTED_ARRIVAL_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date expectedArrivalDate;
 
     public ContainerMovement() {
     }
@@ -157,21 +166,39 @@ public class ContainerMovement implements Serializable {
         this.arrivalPlace = arrivalPlace;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
+
+    public String getLastLocalisation() {
+        return lastLocalisation;
+    }
+
+    public void setLastLocalisation(String lastLocalisation) {
+        this.lastLocalisation = lastLocalisation;
+    }
+
+    public Date getExpectedArrivalDate() {
+        return expectedArrivalDate;
+    }
+
+    public void setExpectedArrivalDate(Date expectedArrivalDate) {
+        this.expectedArrivalDate = expectedArrivalDate;
+    }
+    
+    
 
     @Override
     public int hashCode() {

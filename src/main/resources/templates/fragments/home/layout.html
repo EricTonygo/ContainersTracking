@@ -2,20 +2,90 @@
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
         <title th:text="${title}">CONTAINERS TRACKING</title>
-        <meta charset="UTF-8"/>
-        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" type="text/css" media="all" href="/assets/stylesheets/styles.css" data-th-href="@{/assets/stylesheets/styles.css}" />
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+        <!-- Bootstrap core CSS -->
+        <link data-th-href="@{/assets/home/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" href="#"/>
         <!--<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">-->
-        <link rel="icon" type="image/x-icon" data-th-href="@{/assets/images/favicon.ico}" />
+
+        <!-- Custom fonts for this template -->
+        <link data-th-href="@{/assets/home/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" href="#"/>
+        <link data-th-href="@{/assets/home/vendor/simple-line-icons/css/simple-line-icons.css}" rel="stylesheet" type="text/css" href="#"/>
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css"/>
+
+        <!-- Custom styles for this template -->
+        <link data-th-href="@{/assets/home/css/landing-page.min.css}" rel="stylesheet" href="#"/>
+        <link data-th-href="@{/assets/home/css/reset.css}" rel="stylesheet" href="#"/>
+        <link rel="icon" type="image/x-icon" data-th-href="@{/assets/images/favicon.ico}" href="#"/>
     </head>
     <body>
         <div th:replace="fragments/home/header::header">...</div>
         <div th:replace="fragments/home/sidebar::sidebar">...</div>
         <div th:replace="${view} :: content">...</div>
         <div th:replace="fragments/home/footer::footer">...</div>
-        <script type="text/javascript" data-th-src="@{/assets/js/jquery-3.2.1.min.js}"></script>
-        <script type="text/javascript" data-th-src="@{/assets/semantic/semantic.min.js}"></script>
-        <script type="text/javascript" src="" data-th-src="@{/assets/js/main.js}"></script>
+        <script type="text/javascript" data-th-src="@{/assets/home/vendor/jquery/jquery.min.js}" src="#"></script>
+        <script type="text/javascript" data-th-src="@{/assets/home/vendor/bootstrap/js/bootstrap.bundle.min.js}" src="#"></script>
+        <script th:if='${isContainerMovementSearch != null and isContainerMovementSearch}' type="text/javascript">
+            function getGoogleMapDataFromContainerMovement() {
+                var container_movement_id = "";
+                var google_map_data = {lat: -25.363, lng: 131.044, title: "Hello World!"};
+                if ($('#container_movement_id').is('input:hidden')) {
+                    container_movement_id = $('#container_movement_id').val();
+                }
+                if (container_movement_id !== "") {
+                    var $this = $("#handleLoader").hide();
+                    $.ajax({
+                        type: 'get',
+                        url: '/containers-tracking/api/v1/containers-movements/' + container_movement_id,
+                        data: {},
+                        dataType: 'json',
+                        beforeSend: function () {
+                        },
+                        complete: function () {
+                        },
+                        statusCode: {
+                            500: function (xhr) {
+
+                            },
+                            400: function (response, textStatus, jqXHR) {
+
+                            }
+                        },
+                        success: function (response, textStatus, jqXHR) {
+                            console.log(response);
+                            var container_movement = response.item;
+                            google_map_data.lat = container_movement.latitude;
+                            google_map_data.lng = container_movement.longitude;
+                            google_map_data.title = container_movement.containerNumber;
+                            
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            
+                        }
+                    });
+                }
+                return google_map_data;
+            }
+            function initMap() {
+                var google_map_data = getGoogleMapDataFromContainerMovement();
+                const myLatLng = {lat: google_map_data.lat, lng: google_map_data.lng};
+                const map = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 4,
+                    center: myLatLng
+                });
+                new google.maps.Marker({
+                    position: myLatLng,
+                    map,
+                    title: google_map_data.title
+                });
+            }
+
+        </script>
+        <script th:if='${isContainerMovementSearch != null and isContainerMovementSearch}'
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEdNzy8aY16mlK7aNakLjuOkNsyRNRIHA&callback=initMap&libraries=&v=weekly"
+                async
+        ></script>
     </body>
 </html>

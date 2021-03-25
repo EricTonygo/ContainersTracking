@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -32,6 +34,9 @@ public class Container implements Serializable {
     private String containerType;
     @Column(name = "CONTAINER_SIZE")
     private String containerSize;
+    @ManyToOne
+    @JoinColumn(name = "CONSIGNEE_ID", nullable = true)
+    private Consignee consigneeId;
 
     public Container() {
     }
@@ -66,6 +71,14 @@ public class Container implements Serializable {
 
     public void setContainerSize(String containerSize) {
         this.containerSize = containerSize;
+    }
+
+    public Consignee getConsigneeId() {
+        return consigneeId;
+    }
+
+    public void setConsigneeId(Consignee consigneeId) {
+        this.consigneeId = consigneeId;
     }
 
     @Override

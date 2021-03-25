@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>CONTAINERS TRACKING - HOMEPAGE</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div th:fragment="content">
+
+            <!-- Icons Grid -->
+            <section class="features-icons ">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-9">
+                            <h2 class="mb-4">Résultat de votre recherche</h2>
+                        </div>
+                        <div class="col-md-10 col-lg-8 col-xl-7">
+                            <form th:action="@{/search-container-movement}">
+                                <div class="form-row" th:action="@{/search-container-movement}">
+                                    <!--                            <div class="col-12 col-md-3 mb-2 mb-md-0">
+                                                                    <select id="inputState" class="form-control form-control-lg" name="search-type">
+                                                                        <option value="" selected="selected">Type de recherche</option>
+                                                                        <option value="container-number">Conteneur</option>
+                                                                        <option value="bl-number">BL</option>
+                                                                        <option value="trip-number">Numéro voyage</option>
+                                                                    </select>
+                                                                </div>-->
+                                    <div class="col-12 col-md-9 mb-2 mb-md-0">
+                                        <input type="text"  name="search-number" th:value="${searchNumber}" class="form-control form-control-lg" placeholder="Numéro voyage / conteneur / BL">
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <button type="submit" class="btn btn-block btn-lg btn-primary">Rechercher</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+            <!-- Image Showcases -->
+            <section class="showcase container-movement-search-result">
+                <div class="container p-0">
+                    <div class="row no-gutters">
+
+                        <div id="map" class="col-lg-6 order-lg-2 text-white ">
+
+                        </div>
+                        <div  class="col-lg-6 order-lg-1">
+                            <div th:if='${containerMovementSearch != null}' class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="departurePlace">Depuis</label>
+                                    <div id="departurePlace" th:text="${containerMovementSearch.departurePlace}"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="arrivalPlace">vers</label>
+                                    <div id="arrivalPlace" th:text="${containerMovementSearch.arrivalPlace}"></div>
+                                </div>
+                                <input id="container_movement_id" type="hidden" name="container_movement_id" th:value="${containerMovementSearch.id}"/>
+                            </div>
+                            <table th:if='${containerMovementSearch != null}' class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">First</th>
+                                        <th scope="col">Last</th>
+                                        <th scope="col">Handle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
+</html>

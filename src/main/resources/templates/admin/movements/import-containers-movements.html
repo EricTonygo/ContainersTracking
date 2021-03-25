@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>IMPORTER MOUVEMENTS DE CONTENEURS - CONTAINERS TRACKING</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div th:fragment="content">
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <h1 class="h3 mb-4 text-gray-800">Importer les mouvements de conteneurs</h1>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Importer un fichier excel</h6>
+                            </div>
+                            <div class="card-body">
+                                <form id="containers_mouvement_import_data_form" enctype="multipart/form-data"  th:action="@{/admin/containers-movements/import-data}" method="post">
+                                    <div class="col-12">
+                                        <div class="input-group mb-3">
+                                            <input type="file" class="form-control" name="file" id="inputGroupFile02"/>
+                                            <label class="input-group-text" for="inputGroupFile02">Selectioner</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">Importer</button>
+                                        <a class="btn btn-danger"  th:href="@{/admin/containers-movements}">Annuler</a>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+    </body>
+</html>

@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * @author penda
  */
 @Entity
-@Table(name = "CONSIGNEE")
+@Table(name = "CONSIGNEES")
 public class Consignee {
 
     @Id
@@ -35,10 +35,12 @@ public class Consignee {
     private String mobilePhoneNumber;
     @Column(name = "FIX_PHONE_NUMBER")
     private String fixPhoneNumber;
-    @Column(name = "EMAiL")
+    @Column(name = "EMAIL")
     private String email;
     @Column(name = "FAX")
     private String fax;
+    @Column(name = "CONTAINER_NUMBER_PREFIX")
+    private String containerNumberPrefix;
 
     public Consignee() {
     }

@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * @author penda
  */
 @Entity
-@Table(name = "CHARGER")
+@Table(name = "CHARGERS")
 public class Charger implements Serializable {
 
     @Id

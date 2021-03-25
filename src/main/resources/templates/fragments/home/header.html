@@ -10,6 +10,14 @@ and open the template in the editor.
         <meta charset="UTF-8">
     </head>
     <body>
-        <div th:fragment = "header" ></div>
+        <div th:fragment = "header" >
+            <!-- Navigation -->
+            <nav class="navbar navbar-light bg-light static-top">
+                <div class="container">
+                    <a class="navbar-brand" th:href="@{/}">Containers Tracking</a>
+                    <a class="btn btn-primary" href="@{/sign-in}">Connexion</a>
+                </div>
+            </nav>
+        </div>
     </body>
 </html>
