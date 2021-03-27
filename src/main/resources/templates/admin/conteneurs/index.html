@@ -42,7 +42,7 @@ and open the template in the editor.
                                         <th>Numéro</th>
                                         <th>Taille</th>
                                         <th>Type</th>
-                                        <th>Actions</th>
+                                        <!--<th>Actions</th>-->
                                     </tr>
                                 </thead>
 
@@ -51,12 +51,12 @@ and open the template in the editor.
                                         <td th:text="${conteneur.numeroConteneur}"></td>
                                         <td th:text="${conteneur.tailleConteneur}"></td>
                                         <td th:text="${conteneur.typeConteneur}"></td>
-                                        <td>
+<!--                                        <td>
                                             <a th:href="@{/admin/conteneurs/edit/{id}(id=${conteneur.idConteneur})}" class=" btn btn-sm btn-primary shadow-sm" title="Edit"><i
                                     class="fas fa-edit fa-sm text-white-50"></i> </a>
                                     <a th:href="@{/admin/conteneurs/delete/{id}(id=${conteneur.idConteneur})}" class=" btn btn-sm btn-danger shadow-sm" title="Delete"><i
                                     class="fas fa-times-circle fa-sm text-white-50"></i> </a>
-                                        </td>
+                                        </td>-->
                                     </tr>
                                 </tbody>
                                 <tfoot th:if="${totalPages > 1}">
