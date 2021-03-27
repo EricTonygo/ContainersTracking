@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="mouvement_conteneur" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba321f97-a3a6-428d-81c2-c2be238e820c">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="NUMERO_CONTENEUR" class="java.lang.String"/>
+	<parameter name="TAILLE_CONTENEUR" class="java.lang.String"/>
+	<parameter name="TYPE_CONTENEUR" class="java.lang.String"/>
+	<parameter name="LIEU_DEPART" class="java.lang.String"/>
+	<parameter name="LIEU_ARRIVEE" class="java.lang.String"/>
+	<parameter name="DATE_MOUVEMENT" class="java.lang.String"/>
+	<parameter name="HEURE_MOUVEMENT" class="java.lang.String"/>
+	<parameter name="TYPE_MOUVEMENT" class="java.lang.String"/>
+	<parameter name="NUMERO_BL" class="java.lang.String"/>
+	<parameter name="NUMERO_VOYAGE" class="java.lang.String"/>
+	<parameter name="NOM_NAVIRE" class="java.lang.String"/>
+	<parameter name="ARRIVEE_PREVISIONNELLE" class="java.lang.String"/>
+	<parameter name="DERNIERE_LOCALISATION" class="java.lang.String"/>
+	<parameter name="LATITUDE" class="java.lang.String"/>
+	<parameter name="LONGITUDE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="74" splitType="Stretch">
+			<staticText>
+				<reportElement x="135" y="20" width="285" height="30" forecolor="#0044FF" uuid="4719b39e-131e-43a6-b032-86e9160a642d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESULTAT DE LA RECHERCHE DU CONTENEUR]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="257" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="120" height="20" uuid="86bdffe2-08f3-462f-ba0b-a308ec981f62"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numéro de conteneur :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="120" height="20" uuid="4a3a10a9-0987-4d5f-b1b9-0dfb5c21a321"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Taille du conteneur :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="70" width="120" height="20" uuid="47b4c52f-8fd7-4265-bf89-7c3fc8cbdd05"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type du conteneur :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="120" height="20" uuid="1411a25d-1049-43a8-a530-1d142a01f2b6"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lieu de départ :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="130" width="120" height="20" uuid="e236915e-9a81-4de8-b53d-f05bb60acf56"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lieu d'arrivée :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="160" width="120" height="20" uuid="3e1403f0-63f7-4918-b86f-c47da14dc32b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date du mouvement :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="190" width="120" height="20" uuid="678dc71d-d15d-493c-a7b3-45bd1ee522de"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Heure du mouvement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="220" width="110" height="20" uuid="657363d6-738e-4f98-8e5c-88c7b235b397"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type du mouvement :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="128" y="10" width="140" height="20" forecolor="#FF5E00" uuid="cd063cc2-417f-4445-a9a5-bb0a4d5c36bd"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NUMERO_CONTENEUR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="280" y="10" width="110" height="20" uuid="068b3b7d-bdc1-4db4-9241-7d6025966a3d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numéro BL : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="40" width="110" height="20" uuid="aabd0873-23e8-4b25-b5d4-b74ad6831fb0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numéro de voyage :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="70" width="110" height="20" uuid="b405b67f-d2d1-4eec-95aa-1ef99726b6c8"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nom du navire :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="100" width="111" height="20" uuid="93da07c3-1d3f-4d97-a374-0b71dc3a1ddf"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Arrivée prévisionnelle :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="130" width="110" height="20" uuid="a78a3b60-03b2-4722-9b59-6e378f02b792"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dernière localisation :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="160" width="110" height="20" uuid="02d288b9-80cb-42e6-806b-90b5d21054b7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Latitude :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="190" width="110" height="20" uuid="d036fd77-94c5-4395-9526-ac8ec97afba2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comic Sans MS" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Longitude :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="128" y="40" width="140" height="20" forecolor="#FF5E00" uuid="e1d19e32-aec0-485e-93bd-cf5f5c6893d9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TAILLE_CONTENEUR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="128" y="70" width="140" height="20" forecolor="#FF5E00" uuid="b4190fa0-d587-42e9-b78d-33b8a8ecbe09"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TYPE_CONTENEUR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="100" width="138" height="20" forecolor="#FF5E00" uuid="00993a51-391c-4ce6-9482-006e8696470a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LIEU_DEPART}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="130" width="138" height="20" forecolor="#FF5E00" uuid="a0a46351-aa47-4df2-b1d7-5ccdc3e3e673"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LIEU_ARRIVEE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="160" width="138" height="20" forecolor="#FF5E00" uuid="1a11aa73-73e3-44d3-afe5-81954a62dbae"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DATE_MOUVEMENT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="190" width="138" height="20" forecolor="#FF5E00" uuid="bf550a28-b55f-4e19-b552-e4a558690074"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{HEURE_MOUVEMENT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="220" width="138" height="20" forecolor="#FF5E00" uuid="2ef3dc05-d3c5-4c8d-b61a-7d960a83f256"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TYPE_MOUVEMENT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="10" width="150" height="20" forecolor="#FF5E00" uuid="a91df08f-6da4-40e7-ab7e-12152289ff5c"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NUMERO_BL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="40" width="150" height="20" forecolor="#FF5E00" uuid="6ce5eb44-bba8-4204-b526-82b232df797a"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NUMERO_VOYAGE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="70" width="150" height="20" forecolor="#FF5E00" uuid="9727056f-d996-43e0-a513-ae754e1cbdca"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NOM_NAVIRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="100" width="150" height="20" forecolor="#FF5E00" uuid="a64ba5a4-2bea-4760-8439-c12e0e396e33"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ARRIVEE_PREVISIONNELLE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="130" width="150" height="20" forecolor="#FF5E00" uuid="9698a4a4-3115-4e1f-b689-2a9360cdafca"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DERNIERE_LOCALISATION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="160" width="150" height="20" forecolor="#FF5E00" uuid="7e3944b0-e2da-4346-83eb-959a4cee9284"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LATITUDE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="190" width="150" height="20" forecolor="#FF5E00" uuid="cd61b8e9-caa6-4f61-864c-c8ffc6e4228e"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LONGITUDE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -35,7 +35,6 @@
                     container_movement_id = $('#container_movement_id').val();
                 }
                 if (container_movement_id !== "") {
-                    var $this = $("#handleLoader").hide();
                     $.ajax({
                         type: 'get',
                         url: '/containers-tracking/api/v1/containers-movements/' + container_movement_id,
@@ -59,27 +58,79 @@
                             google_map_data.lat = container_movement.latitude;
                             google_map_data.lng = container_movement.longitude;
                             google_map_data.title = container_movement.containerNumber;
-                            
+
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
-                            
+
                         }
                     });
                 }
                 return google_map_data;
             }
             function initMap() {
-                var google_map_data = getGoogleMapDataFromContainerMovement();
-                const myLatLng = {lat: google_map_data.lat, lng: google_map_data.lng};
-                const map = new google.maps.Map(document.getElementById("map"), {
-                    zoom: 4,
-                    center: myLatLng
-                });
-                new google.maps.Marker({
-                    position: myLatLng,
-                    map,
-                    title: google_map_data.title
-                });
+                var container_movement_id = "";
+                var google_map_data = {lat: -25.363, lng: 131.044, title: "Hello World!"};
+                if ($('#container_movement_id').is('input:hidden')) {
+                    container_movement_id = $('#container_movement_id').val();
+                }
+                if (container_movement_id !== "") {
+                    $.ajax({
+                        type: 'get',
+                        url: '/containers-tracking/api/v1/containers-movements/' + container_movement_id,
+                        data: {},
+                        dataType: 'json',
+                        beforeSend: function () {
+                        },
+                        complete: function () {
+                        },
+                        statusCode: {
+                            500: function (xhr) {
+
+                            },
+                            400: function (response, textStatus, jqXHR) {
+
+                            }
+                        },
+                        success: function (response, textStatus, jqXHR) {
+                            console.log(response);
+                            var container_movement = response.item;
+                            google_map_data.lat = container_movement.latitude;
+                            google_map_data.lng = container_movement.longitude;
+                            google_map_data.title = container_movement.numeroConteneur;
+                            const myLatLng = {lat: google_map_data.lat, lng: google_map_data.lng};
+                            const map = new google.maps.Map(document.getElementById("map"), {
+                                zoom: 4,
+                                center: myLatLng
+                            });
+                            const contentString =
+                                    '<div id="content" style="color:#212529">' +
+                                    '<div id="siteNotice">' +
+                                    "</div>" +
+                                    '<h4 id="firstHeading" class="firstHeading">' + container_movement.numeroConteneur + '</h4>' +
+                                    '<div id="bodyContent">' +
+                                    "<p><b>Latitude</b>: " + container_movement.latitude + 
+                                    "  <b>Longitude</b>: " + container_movement.longitude +
+                                    "</p>" +
+                                    "</div>" +
+                                    "</div>";
+                            const infowindow = new google.maps.InfoWindow({
+                                content: contentString
+                            });
+                            const marker = new google.maps.Marker({
+                                position: myLatLng,
+                                map,
+                                title: google_map_data.title
+                            });
+                            marker.addListener("click", () => {
+                                infowindow.open(map, marker);
+                            });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+
+                        }
+                    });
+                }
+
             }
 
         </script>

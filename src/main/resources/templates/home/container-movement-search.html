@@ -20,7 +20,7 @@ and open the template in the editor.
                         <div class="col-xl-9">
                             <h2 class="mb-4">Résultat de votre recherche</h2>
                         </div>
-                        <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="col-md-12 col-lg-8 col-xl-12">
                             <form th:action="@{/search-container-movement}">
                                 <div class="form-row" th:action="@{/search-container-movement}">
                                     <!--                            <div class="col-12 col-md-3 mb-2 mb-md-0">
@@ -31,11 +31,14 @@ and open the template in the editor.
                                                                         <option value="trip-number">Numéro voyage</option>
                                                                     </select>
                                                                 </div>-->
-                                    <div class="col-12 col-md-9 mb-2 mb-md-0">
+                                    <div class="col-12 col-md-4 mb-2 mb-md-0">
                                         <input type="text"  name="search-number" th:value="${searchNumber}" class="form-control form-control-lg" placeholder="Numéro voyage / conteneur / BL">
                                     </div>
-                                    <div class="col-12 col-md-3">
+                                    <div class="col-12 col-md-2">
                                         <button type="submit" class="btn btn-block btn-lg btn-primary">Rechercher</button>
+                                    </div>
+                                    <div th:if='${containerMovementSearch != null}' class="col-12 col-md-2 float-right">
+                                        <a type="submit" class="btn btn-block btn-lg btn-warning" th:href="@{/search-container-movement/{id}/export-to-pdf(id=${containerMovementSearch.idMouvement})}">Imprimer</a>
                                     </div>
                                 </div>
                             </form>
@@ -54,33 +57,61 @@ and open the template in the editor.
                         </div>
                         <div  class="col-lg-6 order-lg-1">
                             <div th:if='${containerMovementSearch != null}' class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="departurePlace">Depuis</label>
-                                    <div id="departurePlace" th:text="${containerMovementSearch.departurePlace}"></div>
+                                <div class="form-group col-md-4">
+                                    <label for="mouvementDate" style="font-weight: bold;">Mouvement du :</label>
+                                    <div id="mouvementDate"><span th:text="${#dates.format(containerMovementSearch.dateMouvement, 'dd/MM/yyyy')}"></span> <span th:if='${containerMovementSearch.heureMouvement != null}'>à <span th:text="${#dates.format(containerMovementSearch.heureMouvement, 'HH:mm')}"></span></span></div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="arrivalPlace">vers</label>
-                                    <div id="arrivalPlace" th:text="${containerMovementSearch.arrivalPlace}"></div>
+                                <div class="form-group col-md-4">
+                                    <label for="departurePlace" style="font-weight: bold;">Lieu Départ :</label>
+                                    <div id="departurePlace" th:text="${containerMovementSearch.lieuDepart}"></div>
                                 </div>
-                                <input id="container_movement_id" type="hidden" name="container_movement_id" th:value="${containerMovementSearch.id}"/>
+                                <div class="form-group col-md-4">
+                                    <label for="arrivalPlace" style="font-weight: bold;">Lieu Arrivée :</label>
+                                    <div id="arrivalPlace" th:text="${containerMovementSearch.lieuArrivee}"></div>
+                                </div>
+                               
+                                <input id="container_movement_id" type="hidden" name="container_movement_id" th:value="${containerMovementSearch.idMouvement}"/>
                             </div>
-                            <table th:if='${containerMovementSearch != null}' class="table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
+                            <div th:if='${containerMovementSearch != null}' class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="dateprevisionnelle" style="font-weight: bold;">Arrivée prévisionnelle</label>
+                                    <div id="dateprevisionnelle" th:text="${#dates.format(containerMovementSearch.datePrevisionnelle, 'dd/MM/yyyy')}"></div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="derniereLocalisation" style="font-weight: bold;">Dernière localisation :</label>
+                                    <div id="derniereLocalisation" th:text="${containerMovementSearch.derniereLocalisation}"></div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="typeMouvement" style="font-weight: bold;">Lieu Arrivée :</label>
+                                    <div id="typMouvement" th:text="${containerMovementSearch.typeMouvement}"></div>
+                                </div>
+                            </div>
+                            
+                            <div th:if='${containerMovementSearch != null}' class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="tailleconteneur" style="font-weight: bold;">Taille Conteneur</label>
+                                    <div id="tailleconteneur" th:text="${containerMovementSearch.tailleConteneur}"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="typeConteneur" style="font-weight: bold;">Type Conteneur :</label>
+                                    <div id="typeConteneur" th:text="${containerMovementSearch.typeConteneur}"></div>
+                                </div>
+                            </div>
+                            <div th:if='${containerMovementSearch != null}' class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="nomNavire" style="font-weight: bold;">Nom Navire</label>
+                                    <div id="nomNavire" th:text="${containerMovementSearch.nomNavire}"></div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="numeroBL" style="font-weight: bold;">Numero BL :</label>
+                                    <div id="numeroBL" th:text="${containerMovementSearch.numeroBL}"></div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="numeroVoyage" style="font-weight: bold;">Numero voyage :</label>
+                                    <div id="numeroVoyage" th:text="${containerMovementSearch.numeroVoyage}"></div>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

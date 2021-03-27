@@ -7,8 +7,8 @@ package org.guce.containers.tracking.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.guce.containers.tracking.models.ContainerMovement;
-import org.guce.containers.tracking.services.impl.ContainerMovementService;
+import org.guce.containers.tracking.models.MouvementConteneur;
+import org.guce.containers.tracking.services.impl.MouvementConteneurService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContainersTrackingRestController {
 
     @Autowired
-    ContainerMovementService containerMovementService;
+    MouvementConteneurService containerMovementService;
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ContainersTrackingRestController.class);
 
@@ -34,7 +34,8 @@ public class ContainersTrackingRestController {
     public Map<String, Object> getContainerMovement(@PathVariable("id") Long id) {
         Map<String, Object> result = new HashMap<>();
         try {
-            result.put("item", containerMovementService.getContainerMovement(id));
+            MouvementConteneur containerMovement = containerMovementService.getContainerMovement(id);
+            result.put("item", containerMovement != null ? containerMovement.toMap(): null);
         } catch (Exception ex) {
             logger.error(null, ex);
         }

@@ -5,7 +5,7 @@
  */
 package org.guce.containers.tracking.repositories;
 
-import org.guce.containers.tracking.models.Charger;
+import org.guce.containers.tracking.models.HistoriqueRechercheConteneur;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author penda
  */
 @Repository
-public interface ChargerRepository extends JpaRepository<Charger, Long>{
+public interface HistoriqueRechercheConteneurRepository extends JpaRepository<HistoriqueRechercheConteneur, Long>{
     
 }
-

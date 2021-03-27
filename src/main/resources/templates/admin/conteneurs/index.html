@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>MOUVEMENTS DE CONTENEURS - CONTAINERS TRACKING</title>
+        <title>CONTENEURS - CONTAINERS TRACKING</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
@@ -16,19 +16,15 @@ and open the template in the editor.
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">Mouvements de conteneurs</h1>
-                <p class="mb-4">Gerer l'ensemble des mouvements des conteneurs disponible à cet instant sur la plateforme.</p>
+                <h1 class="h3 mb-2 text-gray-800">Conteneurs</h1>
+                <p class="mb-4">Gerer l'ensemble des conteneurs disponible à cet instant sur la plateforme.</p>
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Liste des mouvements de conteneurs</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Liste des conteneurs</h6>
                         <div class="d-none d-sm-inline-block">
-                            <a th:href="@{/admin/containers-movements/import-data}" class=" btn btn-sm btn-primary shadow-sm"><i
-                                    class="fas fa-upload fa-sm text-white-50"></i> Importer fichier xlsx</a>
-
-<!--                            <a th:href="@{/admin/containers-movements/add}" class="btn btn-sm btn-primary shadow-sm"><i
-                                    class="fas fa-plus fa-sm text-white-50"></i> Ajouter</a>-->
+                           
                         </div>
 
                     </div>
@@ -43,30 +39,22 @@ and open the template in the editor.
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Départ</th>
-                                        <th>Arrivée</th>
-                                        <th>Date mouvement</th>
-                                        <th>Heure mouvement</th>
-                                        <th>Numéro conteneur</th>
-                                        <th>Numéro BL</th>
-                                        <th>numéro voyage</th>
+                                        <th>Numéro</th>
+                                        <th>Taille</th>
+                                        <th>Type</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    <tr th:each="containerMovement : ${containerMovementList}">
-                                        <td th:text="${containerMovement.lieuDepart}"></td>
-                                        <td th:text="${containerMovement.lieuArrivee}"></td>
-                                        <td th:text="${#dates.format(containerMovement.dateMouvement, 'dd/MM/yyyy')}"></td>
-                                        <td th:text="${#dates.format(containerMovement.heureMouvement, 'HH:mm')}"></td>
-                                        <td th:text="${containerMovement.numeroConteneur}"></td>
-                                        <td th:text="${containerMovement.numeroBL}"></td>
-                                        <td th:text="${containerMovement.numeroVoyage}"></td>
+                                    <tr th:each="conteneur : ${conteneurs}">
+                                        <td th:text="${conteneur.numeroConteneur}"></td>
+                                        <td th:text="${conteneur.tailleConteneur}"></td>
+                                        <td th:text="${conteneur.typeConteneur}"></td>
                                         <td>
-                                            <a th:href="@{/admin/containers-movements/edit/{id}(id=${containerMovement.idMouvement})}" class=" btn btn-sm btn-primary shadow-sm" title="Edit"><i
+                                            <a th:href="@{/admin/conteneurs/edit/{id}(id=${conteneur.idConteneur})}" class=" btn btn-sm btn-primary shadow-sm" title="Edit"><i
                                     class="fas fa-edit fa-sm text-white-50"></i> </a>
-                                    <a th:href="@{/admin/containers-movements/delete/{id}(id=${containerMovement.idMouvement})}" class=" btn btn-sm btn-danger shadow-sm" title="Delete"><i
+                                    <a th:href="@{/admin/conteneurs/delete/{id}(id=${conteneur.idConteneur})}" class=" btn btn-sm btn-danger shadow-sm" title="Delete"><i
                                     class="fas fa-times-circle fa-sm text-white-50"></i> </a>
                                         </td>
                                     </tr>

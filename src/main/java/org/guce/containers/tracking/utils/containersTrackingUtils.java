@@ -5,21 +5,36 @@
  */
 package org.guce.containers.tracking.utils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.guce.containers.tracking.models.ContainerMovement;
+import org.guce.containers.tracking.models.MouvementConteneur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ResourceLoader;
 
 /**
  *
@@ -29,8 +44,8 @@ public class containersTrackingUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(containersTrackingUtils.class);
 
-    public static List<ContainerMovement> getContainersMovementsFromFile(InputStream inputStream) throws FileNotFoundException, IOException, Exception {
-        List<ContainerMovement> containerMovementList = new ArrayList<>();
+    public static List<MouvementConteneur> getContainersMovementsFromFile(InputStream inputStream) throws FileNotFoundException, IOException, Exception {
+        List<MouvementConteneur> mouvementConteneurList = new ArrayList<>();
 
         if (inputStream != null) {
             // création d'un objet XSSF Workbook pour le fichier excel
@@ -42,132 +57,132 @@ public class containersTrackingUtils {
             Iterator<Row> rowIt = sheet.iterator();
             Integer rowNum = 0;
             Integer cellNum;
-            ContainerMovement containerMovement;
+            MouvementConteneur mouvementConteneur;
             while (rowIt.hasNext()) {
                 cellNum = 0;
                 Row row = rowIt.next();
                 // Iteration des cellules de la ligne courante
                 Iterator<Cell> cellIterator = row.cellIterator();
                 if (rowNum > 0) {
-                    containerMovement = new ContainerMovement();
+                    mouvementConteneur = new MouvementConteneur();
                     while (cellIterator.hasNext()) {
                         Cell cell = cellIterator.next();
                         switch (cellNum) {
                             case 0:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
-                                    containerMovement.setContainerNumber(cell.getStringCellValue());
+                                    mouvementConteneur.setNumeroConteneur(cell.getStringCellValue());
                                 } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-                                    containerMovement.setContainerNumber(cell.getNumericCellValue() + "");
+                                    mouvementConteneur.setNumeroConteneur(cell.getNumericCellValue() + "");
                                 }
                                 break;
                             case 1:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
                                     String movementDateStr = cell.getStringCellValue();
                                     if (movementDateStr != null && !movementDateStr.equals("")) {
-                                        containerMovement.setMovementDate(new SimpleDateFormat("dd/MM/yyyy").parse(movementDateStr));
+                                        mouvementConteneur.setDateMouvement(new SimpleDateFormat("dd/MM/yyyy").parse(movementDateStr));
                                     }
                                 } else {
-                                    containerMovement.setMovementDate(cell.getDateCellValue());
+                                    mouvementConteneur.setDateMouvement(cell.getDateCellValue());
                                 }
                                 break;
                             case 2:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
                                     String movementHourStr = cell.getStringCellValue();
                                     if (movementHourStr != null && !movementHourStr.equals("")) {
-                                        containerMovement.setMovementHour(new SimpleDateFormat("HH:mm").parse(movementHourStr));
+                                        mouvementConteneur.setHeureMouvement(new SimpleDateFormat("HH:mm").parse(movementHourStr));
                                     }
                                 } else {
-                                   containerMovement.setMovementHour(cell.getDateCellValue());
+                                   mouvementConteneur.setHeureMouvement(cell.getDateCellValue());
                                     
                                 }
                                 break;
                             case 3:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
-                                    containerMovement.setMovementType(cell.getStringCellValue());
+                                    mouvementConteneur.setTypeMouvement(cell.getStringCellValue());
                                 } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-                                    containerMovement.setMovementType(cell.getNumericCellValue() + "");
+                                    mouvementConteneur.setTypeMouvement(cell.getNumericCellValue() + "");
                                 }
                                 break;
                             case 4:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
-                                    containerMovement.setBlNumber(cell.getStringCellValue());
+                                    mouvementConteneur.setNumeroBL(cell.getStringCellValue());
                                 } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-                                    containerMovement.setBlNumber(cell.getNumericCellValue() + "");
+                                    mouvementConteneur.setNumeroBL(cell.getNumericCellValue() + "");
                                 }
                                 break;
                             case 5:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
-                                    containerMovement.setVesselName(cell.getStringCellValue());
+                                    mouvementConteneur.setNomNavire(cell.getStringCellValue());
                                 } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-                                    containerMovement.setVesselName(cell.getNumericCellValue() + "");
+                                    mouvementConteneur.setNomNavire(cell.getNumericCellValue() + "");
                                 }
                                 break;
                             case 6:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
-                                    containerMovement.setContainerType(cell.getStringCellValue());
+                                    mouvementConteneur.setTypeConteneur(cell.getStringCellValue());
                                 } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-                                    containerMovement.setContainerType(cell.getNumericCellValue() + "");
+                                    mouvementConteneur.setTypeConteneur(cell.getNumericCellValue() + "");
                                 }
                                 break;
                             case 7:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
-                                    containerMovement.setContainerSize(cell.getStringCellValue());
+                                    mouvementConteneur.setTailleConteneur(cell.getStringCellValue());
                                 } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-                                    containerMovement.setContainerType(cell.getNumericCellValue() + "");
+                                    mouvementConteneur.setTailleConteneur((int)cell.getNumericCellValue() + "");
                                 }
                                 break;
                             case 8:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
-                                    containerMovement.setTripNumber(cell.getStringCellValue());
+                                    mouvementConteneur.setNumeroVoyage(cell.getStringCellValue());
                                 } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-                                    containerMovement.setTripNumber(cell.getNumericCellValue() + "");
+                                    mouvementConteneur.setNumeroVoyage(cell.getNumericCellValue()+ "");
                                 }
                                 break;
                             case 9:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
-                                    containerMovement.setDeparturePlace(cell.getStringCellValue());
+                                    mouvementConteneur.setLieuDepart(cell.getStringCellValue());
                                 } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-                                    containerMovement.setDeparturePlace(cell.getNumericCellValue() + "");
+                                    mouvementConteneur.setLieuDepart(cell.getNumericCellValue() + "");
                                 }
                                 break;
                             case 10:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
-                                    containerMovement.setArrivalPlace(cell.getStringCellValue());
+                                    mouvementConteneur.setLieuArrivee(cell.getStringCellValue());
                                 } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-                                    containerMovement.setArrivalPlace(cell.getNumericCellValue() + "");
+                                    mouvementConteneur.setLieuArrivee(cell.getNumericCellValue() + "");
                                 }
                                 break;
                             case 11:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
-                                    containerMovement.setLastLocalisation(cell.getStringCellValue());
+                                    mouvementConteneur.setDerniereLocalisation(cell.getStringCellValue());
                                 } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-                                    containerMovement.setLastLocalisation(cell.getNumericCellValue() + "");
+                                    mouvementConteneur.setDerniereLocalisation(cell.getNumericCellValue() + "");
                                 }
                                 break;
                             case 12:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
                                     String latitudeStr = cell.getStringCellValue().replaceAll(",", ".");
-                                    containerMovement.setLatitude(Double.parseDouble(latitudeStr));
+                                    mouvementConteneur.setLatitude(Double.parseDouble(latitudeStr));
                                 } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-                                    containerMovement.setLatitude((double) cell.getNumericCellValue());
+                                    mouvementConteneur.setLatitude((double) cell.getNumericCellValue());
                                 }
                                 break;
                             case 13:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
                                     String longitudeStr = cell.getStringCellValue().replaceAll(",", ".");
-                                    containerMovement.setLongitude(Double.parseDouble(longitudeStr));
+                                    mouvementConteneur.setLongitude(Double.parseDouble(longitudeStr));
                                 } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-                                    containerMovement.setLongitude((double) cell.getNumericCellValue());
+                                    mouvementConteneur.setLongitude((double) cell.getNumericCellValue());
                                 }
                                 break;
                             case 14:
                                 if (cell.getCellTypeEnum() == CellType.STRING) {
                                     String expectedArrivalDateStr = cell.getStringCellValue();
                                     if (expectedArrivalDateStr != null && !expectedArrivalDateStr.equals("")) {
-                                        containerMovement.setExpectedArrivalDate(new SimpleDateFormat("dd/MM/yyyy").parse(expectedArrivalDateStr));
+                                        mouvementConteneur.setDatePrevisionnelle(new SimpleDateFormat("dd/MM/yyyy").parse(expectedArrivalDateStr));
                                     }
                                 } else {
-                                    containerMovement.setExpectedArrivalDate(cell.getDateCellValue());
+                                    mouvementConteneur.setDatePrevisionnelle(cell.getDateCellValue());
                                 }
                                 break;
                             default:
@@ -175,12 +190,50 @@ public class containersTrackingUtils {
                         }
                         cellNum++;
                     }
-                    containerMovementList.add(containerMovement);
+                    mouvementConteneurList.add(mouvementConteneur);
                 }
                 rowNum++;
             }
             workbook.close();
         }
-        return containerMovementList;
+        return mouvementConteneurList;
+    }
+    
+    public static byte[] genererRapportRechercheMouvementConteneur(MouvementConteneur mouvementConteneur, ResourceLoader resourceLoader) throws JRException, IOException {
+        String masterReportFileName = resourceLoader.getResource("classpath:reports/mouvement_conteneur.jrxml").getFile().getAbsolutePath();
+        NumberFormat numberFormat = NumberFormat.getInstance(Locale.FRENCH);
+        numberFormat.setMaximumFractionDigits(0);
+
+        
+        JRDataSource ds = new JREmptyDataSource();
+//        JREmptyDataSource beanColDataSource = new JREmptyDataSource();
+
+        /* Compile the master */
+        JasperReport jasperMasterReport = JasperCompileManager
+                .compileReport(masterReportFileName);
+
+        Map<String, Object> parameters = new HashMap<>();
+        
+        parameters.put("NUMERO_CONTENEUR", mouvementConteneur.getNumeroConteneur());
+        parameters.put("TAILLE_CONTENEUR", mouvementConteneur.getTailleConteneur());
+        parameters.put("TYPE_CONTENEUR", mouvementConteneur.getTypeConteneur());
+        parameters.put("LIEU_DEPART", mouvementConteneur.getLieuDepart());
+        parameters.put("LIEU_ARRIVEE", mouvementConteneur.getLieuArrivee());
+        parameters.put("DATE_MOUVEMENT", mouvementConteneur.getDateMouvement()!= null ? new SimpleDateFormat("dd/MM/yyyy").format(mouvementConteneur.getDateMouvement()): "");
+        parameters.put("HEURE_MOUVEMENT", mouvementConteneur.getHeureMouvement()!= null ? new SimpleDateFormat("HH:mm").format(mouvementConteneur.getHeureMouvement()): "");
+        parameters.put("TYPE_MOUVEMENT", mouvementConteneur.getTypeMouvement());
+        parameters.put("NUMERO_BL", mouvementConteneur.getNumeroBL());
+        parameters.put("NUMERO_VOYAGE", mouvementConteneur.getNumeroVoyage());
+        parameters.put("NOM_NAVIRE", mouvementConteneur.getNomNavire());
+        parameters.put("ARRIVEE_PREVISIONNELLE", mouvementConteneur.getDatePrevisionnelle()!= null ? new SimpleDateFormat("dd/MM/yyyy").format(mouvementConteneur.getDatePrevisionnelle()): "");
+        parameters.put("DERNIERE_LOCALISATION", mouvementConteneur.getDerniereLocalisation());
+        parameters.put("LATITUDE", mouvementConteneur.getLatitude()+"");
+        parameters.put("LONGITUDE", mouvementConteneur.getLongitude()+"");
+        
+        JasperPrint jp = JasperFillManager.fillReport(jasperMasterReport, parameters, ds);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        JasperExportManager.exportReportToPdfStream(jp, outputStream);
+
+        return outputStream.toByteArray();
     }
 }

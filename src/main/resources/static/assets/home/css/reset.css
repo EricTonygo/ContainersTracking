@@ -21,3 +21,15 @@ and open the template in the editor.
 #map{
     height: 300px;
 }
+
+nav.bg-primary {
+    background-color: #2239df!important;
+}
+
+footer.bg-dark-vp{
+    background-color: #2f588b!important;
+}
+
+nav.bg-dark-header-vp{
+    background-color: #1f2236!important;
+}
